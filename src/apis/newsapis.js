@@ -1,6 +1,4 @@
-import NewsAPI from 'newsapi';
-
-const env = await import.meta.env;
+const env = import.meta.env;
 
 export const getTopHeadlinesNewsApi = async ({category}) => {
     try {
