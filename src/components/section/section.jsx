@@ -3,9 +3,10 @@ import NewsCard from '../card/newscard';
 import { getEverythingBasedOnFilter, getTopHeadlines } from '../../apis/api';
 import { ApiSourceEnums } from '../../utils/constants';
 import { useSelector } from 'react-redux';
+import Strings from '../../utils/strings';
 
 
-const Section = () => {
+const Section = ({ apiSource }) => {
 
   const [articles, setArticles] = React.useState([]);
 
@@ -17,24 +18,31 @@ const Section = () => {
   }, []);
 
   React.useEffect(() => {
-    console.log(filter);
+    fetchTopHeadlines();
+  }, [apiSource]);
+
+
+
+  React.useEffect(() => {
     if (filter?.from) {
       fetchEverythingBasedOnFilter(filter);
     }
-    else if(filter?.refresh==true)
-    {
+    else if (filter?.refresh == true) {
       fetchTopHeadlines();
     }
-    else if(filter?.category){
+    else if (filter?.category) {
       fetchTopHeadlines(filter?.category);
     }
   }, [filter]);
 
-  const fetchTopHeadlines = async (category="") => {
+  const fetchTopHeadlines = async (category = "") => {
     try {
       setArticles([]);
-      const res = await getTopHeadlines({ source: ApiSourceEnums.newsApi,category});
-      setArticles(res?.articles || []);
+      const res = await getTopHeadlines({ source: apiSource, category });
+      if (! (res?.articles?.length)) {
+        setArticles(Strings.no_articles);
+      }
+      else setArticles(res?.articles || []);
 
     }
     catch (err) {
@@ -48,8 +56,12 @@ const Section = () => {
   const fetchEverythingBasedOnFilter = async (payload) => {
     try {
       setArticles([]);
-      const res = await getEverythingBasedOnFilter({ source: ApiSourceEnums.newsApi, payload });
-      setArticles(res?.articles || []);
+      const res = await getEverythingBasedOnFilter({ source: apiSource, payload });
+
+      if (!res.articles?.length) {
+        setArticles(Strings.no_articles);
+      }
+      else setArticles(res?.articles || []);
     }
     catch (err) {
       console.log("Error in fetching top headlines", err?.message);
@@ -59,12 +71,12 @@ const Section = () => {
 
 
   return (
-    articles.length==0 ? <div className='flex justify-center items-center flex-col min-h-screen'>
+    articles.length == 0 ? <div className='flex justify-center items-center flex-col min-h-screen'>
       <div className='loader'></div>
 
-    </div> : <div className='flex justify-around flex-col min-h-screen md:px-10 px-2' >
+    </div> : (typeof articles == "string") ?  <div className='mx-auto font-bold p-4'>{articles}</div> : <div className='flex justify-around flex-col min-h-screen md:px-10 px-2' >
 
-      <h4 className='text-xl font-bold text-primary mt-6 mb-6'>Top Headlines</h4>
+      <h4 className='text-xl font-bold text-primary mt-6 mb-6'>Top Stories</h4>
 
       <div className='grid md:grid-cols-3 grid-cols-1 gap-1'>
 
@@ -73,8 +85,6 @@ const Section = () => {
         }
 
       </div>
-
-
 
     </div>
 

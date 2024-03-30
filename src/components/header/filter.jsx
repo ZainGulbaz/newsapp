@@ -28,7 +28,7 @@ const customStyles = {
 };
 
 
-export default function FilterModal({ modalIsOpen, setIsOpen }) {
+export default function FilterModal({ modalIsOpen, setIsOpen, apiSource }) {
 
 
   const [sources, setSources] = React.useState([]);
@@ -42,7 +42,7 @@ export default function FilterModal({ modalIsOpen, setIsOpen }) {
 
   React.useEffect(() => {
 
-    getTopSources({ source: ApiSourceEnums.newsApi }).then(res => {
+    getTopSources({ source: apiSource }).then(res => {
       const sourcesRes = res?.sources?.map(source => {
         return { value: source?.id, name: source?.name }
       })
@@ -62,13 +62,22 @@ export default function FilterModal({ modalIsOpen, setIsOpen }) {
   }
 
   const handleSearch=()=>{
+    try{
     runChecks();
     dispatch(filterAction({keywords,from:filterDate(startDate),to:filterDate(endDate),source}));
     closeModal();
+    }
+    catch(err){
+
+    }
   }
 
   const runChecks=()=>{
-    if(endDate.getTime()<startDate.getTime()) toast.error(Strings.invalid_date_error);
+
+    if(endDate.getTime()<startDate.getTime()) {
+      toast.error(Strings.invalid_date_error); 
+      throw new Error(Strings.invalid_date_error);     
+    }
   }
 
   return (

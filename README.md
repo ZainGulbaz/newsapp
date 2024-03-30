@@ -1,8 +1,5 @@
-# React + Vite
+** Made with Tailwind CSS, React,Redux and Docker.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+To Run Container RUN: bash start.bash
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Working Video: https://www.loom.com/share/327436b1efea4a929af175257c65b250

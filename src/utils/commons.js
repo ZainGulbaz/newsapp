@@ -3,7 +3,7 @@ export const getAfterToday = (days) => {
     return new Date(tomorrow.setDate(tomorrow.getDate() + days));
 }
 
-export const filterDate=(date)=> date.getDate()+"-"+date.getMonth()+1+"-"+date.getFullYear();
+export const filterDate=(date)=> (date.getMonth()+1)+"-"+date.getDate()+"-"+date.getFullYear();
 
 
 export const deepCopy=(data)=>{

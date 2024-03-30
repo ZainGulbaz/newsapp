@@ -3,16 +3,18 @@ import { FaFilter } from "react-icons/fa6";
 import { IoIosRefreshCircle } from "react-icons/io";
 import SelectSearch from 'react-select-search';
 import { deepCopy } from '../../utils/commons.js';
-import { preDefinedCategories } from '../../utils/constants.js';
+import { ApiSourceEnums, preDefinedCategories } from '../../utils/constants.js';
 import { categoryAction } from '../../redux/actions/filterAction.js';
 import { useDispatch } from 'react-redux';
 import 'react-select-search/style.css'
 
 
-const Actions = ({ setIsOpen, handleRefresh, className }) => {
+const Actions = ({ setIsOpen, handleRefresh, className ,apiSource, setApiSource}) => {
 
     const [category, setCategory] = React.useState("");
     const dispatch=useDispatch();
+
+  console.log(setApiSource,"setApi Source");
 
     React.useEffect(()=>{
         dispatch(categoryAction(category));
@@ -20,11 +22,13 @@ const Actions = ({ setIsOpen, handleRefresh, className }) => {
 
 
     const categoryOptions = deepCopy(Object.values(preDefinedCategories)?.map((cat => { return { name: cat, value: cat } })));
+    const ApiSourceOptions = deepCopy(Object.values(ApiSourceEnums)?.map((api => { return { name: api, value: api } })));
 
     return (
         <div className={'flex gap-1 justify-center items-center ' + className}>
 
 <SelectSearch options={categoryOptions} placeholder="Choose your category" value={category} search onChange={value => setCategory(value)}/>
+<SelectSearch options={ApiSourceOptions} placeholder="Choose your Api Source" value={apiSource} search onChange={value => setApiSource(value)}/>
 
             
 

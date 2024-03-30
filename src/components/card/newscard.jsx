@@ -9,7 +9,7 @@ export default function NewsCard({ source, title, image, description,url }) {
                 <h4 className="font-lg font-bold text-primary">{title}</h4>
                 <p className="text-primary overflow-clip text-xs max-w-md">{description?.slice(0,100)}....</p>
             </div>
-            <img src={image} height={100} width={100} className="rounded-lg"/>
+            <img src={image} height={100} width={100} className="rounded-lg" alt="news image"/>
             <hr className="text-primary mt-4 "/>
         </div>
         
