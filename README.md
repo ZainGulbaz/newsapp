@@ -2,4 +2,4 @@
 
 To Run Container RUN: bash start.bash
 
-Working Video: https://www.loom.com/share/327436b1efea4a929af175257c65b250
+Working Video: https://app.clickup.com/9018192384/hubs/clips/da31e28e-c111-4b5a-be37-0a9fd58a437e.webm
